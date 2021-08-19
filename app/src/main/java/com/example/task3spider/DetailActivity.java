@@ -3,10 +3,13 @@ package com.example.task3spider;
 import static com.example.task3spider.MainActivity.EXTRA_ID;
 import static com.example.task3spider.MainActivity.EXTRA_IMAGEURL;
 import static com.example.task3spider.MainActivity.EXTRA_SUPERHERONAME;
+import static com.example.task3spider.MainActivity.EXTRA_SUPERHERO_IMAGE_TRANSITION_NAME;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG2 ="SuperHeroByID";
     ImageView iv_SuperHeroDetail;
-    TextView tv_NameDetail, tv_PowerStats, tv_Appearance, tv_Biography,tv_Work, tv_Connections,tv_PowerStatsContent, tv_AppearanceContent, tv_BiographyContent,tv_WorkContent, tv_ConnectionsContent;
+    TextView tv_NameDetail, tv_IdDetail,tv_PowerStats, tv_Appearance, tv_Biography,tv_Work, tv_Connections,tv_PowerStatsContent, tv_AppearanceContent, tv_BiographyContent,tv_WorkContent, tv_ConnectionsContent;
     String superHeroId,superHeroImageUrl,superHeroName;
 
     SuperHero superHero;
@@ -40,10 +43,21 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        supportPostponeEnterTransition();
+
+        Fade fade = new Fade();
+        View decor = getWindow().getDecorView();
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+
+        getWindow().setEnterTransition(fade);
+        getWindow().setExitTransition(fade);
 
         Intent intent = getIntent();
 
         iv_SuperHeroDetail=findViewById(R.id.iv_SuperHeroDetail);
+        tv_IdDetail=findViewById(R.id.tv_IdDetail);
         tv_NameDetail=findViewById(R.id.tv_NameDetail);
         tv_PowerStats=findViewById(R.id.tv_PowerStats);
         tv_Appearance=findViewById(R.id.tv_Appearance);
@@ -64,9 +78,25 @@ public class DetailActivity extends AppCompatActivity {
         tv_ConnectionsContent.setVisibility(View.INVISIBLE);
 
         superHeroId=intent.getStringExtra(EXTRA_ID);
+        tv_IdDetail.setText("ID : "+superHeroId);
 
+        String imageTransitionName = intent.getStringExtra(EXTRA_SUPERHERO_IMAGE_TRANSITION_NAME);
+        iv_SuperHeroDetail.setTransitionName(imageTransitionName);
         superHeroImageUrl=intent.getStringExtra(EXTRA_IMAGEURL);
-        Picasso.with(this).load(superHeroImageUrl).fit().centerInside().into(iv_SuperHeroDetail);
+
+        Picasso.with(this)
+                .load(superHeroImageUrl)
+                .noFade()
+                .fit()
+                .centerInside()
+                .into(iv_SuperHeroDetail, new com.squareup.picasso.Callback() {
+                    public void onSuccess() {
+                        supportStartPostponedEnterTransition();
+                    }
+                    public void onError() {
+                        supportStartPostponedEnterTransition();
+                    }
+                });
 
         superHeroName=intent.getStringExtra(EXTRA_SUPERHERONAME);
         tv_NameDetail.setText(superHeroName);
@@ -147,7 +177,7 @@ public class DetailActivity extends AppCompatActivity {
 
         biographyContent += "\n"+"Aliases : ";
         for(int i=0;i<superHero.getBiography().getAliases().size();i++) {
-             biographyContent+=superHero.getBiography().getAliases().get(0) + ",";
+             biographyContent+=superHero.getBiography().getAliases().get(i) + ",";
         }
 
         biographyContent+="\n"+"Place of Birth : "+superHero.getBiography().getPlaceOfBirth()+"\n";
@@ -168,6 +198,7 @@ public class DetailActivity extends AppCompatActivity {
         connectionContent+="Relatives : "+superHero.getConnections().getRelatives();
 
         tv_ConnectionsContent.setText(connectionContent);
+        tv_ConnectionsContent.setMovementMethod(new ScrollingMovementMethod());
 
         tv_PowerStatsContent.setVisibility(View.VISIBLE);
         tv_AppearanceContent.setVisibility(View.VISIBLE);

@@ -10,8 +10,9 @@
     <ImageView
         android:id="@+id/iv_SuperHeroDetail"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:src="@mipmap/ic_launcher"
+        android:transitionName="detailActivityTransition"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -62,7 +63,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.016"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tv_ApperanceContent"
         app:layout_constraintTop_toBottomOf="@+id/tv_NameDetail"
         app:layout_constraintVertical_bias="0.027" />
@@ -97,7 +98,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tv_WorkContent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ApperanceContent"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintVertical_bias="0.036" />
 
     <TextView
         android:id="@+id/tv_Connections"
@@ -111,16 +112,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_BiographyContent"
-        app:layout_constraintVertical_bias="0.054" />
+        app:layout_constraintTop_toTopOf="@+id/barrier"
+        app:layout_constraintVertical_bias="0.100" />
 
     <TextView
         android:id="@+id/tv_PowerStatsContent"
-        android:layout_width="170dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:maxLines="10"
         android:singleLine="false"
         android:text="TextView"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.066"
@@ -130,39 +132,42 @@
 
     <TextView
         android:id="@+id/tv_ApperanceContent"
-        android:layout_width="170dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:maxLines="10"
         android:singleLine="false"
         android:text="TextView"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintHorizontal_bias="0.935"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_Appearance"
         app:layout_constraintVertical_bias="0.023" />
 
     <TextView
         android:id="@+id/tv_WorkContent"
-        android:layout_width="170dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:maxLines="10"
         android:singleLine="false"
         android:text="TextView"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintHorizontal_bias="0.935"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_Work"
         app:layout_constraintVertical_bias="0.0213" />
 
     <TextView
         android:id="@+id/tv_BiographyContent"
-        android:layout_width="170dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:maxLines="10"
         android:singleLine="false"
         android:text="TextView"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.066"
@@ -170,21 +175,44 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_Biography"
         app:layout_constraintVertical_bias="0.023" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tv_BiographyContent,tv_WorkContent"
+         />
+
     <TextView
         android:id="@+id/tv_ConnectionsContent"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
+        android:layout_width="380dp"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center_horizontal"
-        android:maxLines="10"
+        android:maxLines="30"
+        android:scrollbars="vertical"
         android:singleLine="false"
         android:text="TextView"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_Connections"
-        app:layout_constraintVertical_bias="0.054" />
+        app:layout_constraintVertical_bias="0.050" />
+
+    <TextView
+        android:id="@+id/tv_IdDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_SuperHeroDetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.966"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.03" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
